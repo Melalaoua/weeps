@@ -13,7 +13,7 @@ logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 
 handler = logging.handlers.RotatingFileHandler(
-filename='discord.log',
+filename='weeps-discord.log',
 encoding='utf-8',
 maxBytes=32 * 1024 * 1024,  # 32 MiB
 backupCount=5,  # Rotate through 5 files
@@ -31,28 +31,25 @@ from emanations.api.llm import LLMFactory
 from emanations.api.diffusion.stability import StabilityAI
 from emanations.api.tts.elevenlabs import ElevenLabs
 
-from config.setup import get_nomen
-
-class Meeps(DiscordBot):
+class Weeps(DiscordBot):
     def __init__(
         self, 
         *args,
         **kwargs
     ) -> commands.Bot:
-        """Initialize Meeps bot"""
+        """Initialize Weeps bot"""
         super().__init__(*args, **kwargs)
-        self.nomen = get_nomen()
 
     
 async def main():
     db = AsyncDb(os.getenv("DB_URI"))
-    llm = LLMFactory("openai", os.getenv("OPENAI_KEY"))
+    llm = LLMFactory("anthropic", os.getenv("ANTHROPIC_KEY"))
     stability = StabilityAI(os.getenv("STABILITY_KEY"))
     elevenlabs = ElevenLabs(os.getenv("ELEVENLABS_KEY"))
 
     await db.begin()
-    async with Meeps(
-        name="Meeps",
+    async with Weeps(
+        name="Weeps",
         db = db,
         cogs_path="cogs",
         llm = llm,

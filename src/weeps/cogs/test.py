@@ -1,10 +1,9 @@
 import discord
 from discord.ext import commands
 
-from meeps import Meeps
-
+from weeps import Weeps
 class Test(commands.Cog):
-    def __init__(self, bot:Meeps):
+    def __init__(self, bot:Weeps):
         self.bot = bot
         
     @commands.command()
