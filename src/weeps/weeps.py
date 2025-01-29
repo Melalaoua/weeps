@@ -31,6 +31,7 @@ from emanations.api.llm import LLMFactory
 from emanations.api.diffusion.stability import StabilityAI
 from emanations.api.tts.elevenlabs import ElevenLabs
 
+from weeps_utils.config import Emojis
 class Weeps(DiscordBot):
     def __init__(
         self, 
@@ -39,6 +40,10 @@ class Weeps(DiscordBot):
     ) -> commands.Bot:
         """Initialize Weeps bot"""
         super().__init__(*args, **kwargs)
+
+    @property
+    def emojis(self):
+        return Emojis
 
     
 async def main():
