@@ -44,6 +44,10 @@ class Weeps(DiscordBot):
     @property
     def emojis(self):
         return Emojis
+    
+    @property
+    def bot_description(self):
+        return "Weeps est le jumeaux maléfique de Meeps. Il est capable de vous aider dans vos tâches quotidiennes, mais il est aussi capable de vous trahir à tout moment."
 
     
 async def main():
