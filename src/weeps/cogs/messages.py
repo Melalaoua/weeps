@@ -13,7 +13,7 @@ from emanations.observers import Observer, Observable, CogObservableMetaclass
 from emanations.angelarium import ExperienceObserver
 
 class MessageDiscord(commands.Cog, Observable, metaclass=CogObservableMetaclass):
-    def __init__(self, bot:Bard):
+    def __init__(self, bot:Weeps):
         self.bot = bot
         self.db = self.bot.db
         self.llm = self.bot.llm
@@ -52,7 +52,7 @@ class MessageDiscord(commands.Cog, Observable, metaclass=CogObservableMetaclass)
             return await load_privates_messages(self.db, message_create)
 
         
-async def setup(bot:Bard) -> None:
+async def setup(bot:Weeps) -> None:
     await bot.add_cog(MessageDiscord(bot))
     
 

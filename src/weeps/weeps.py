@@ -47,12 +47,12 @@ class Weeps(DiscordBot):
     
     @property
     def bot_description(self):
-        return "Weeps est le jumeaux maléfique de Meeps. Il est capable de vous aider dans vos tâches quotidiennes, mais il est aussi capable de vous trahir à tout moment."
+        return "Weeps est le Doppelgänger de Meeps. Il est capable de vous aider dans vos tâches quotidiennes, mais il est aussi capable de vous trahir à tout moment."
 
     
 async def main():
     db = AsyncDb(os.getenv("DB_URI"))
-    llm = LLMFactory("anthropic", os.getenv("ANTHROPIC_KEY"))
+    llm = LLMFactory("groq", os.getenv("GROQ_KEY"), default_model="deepseek-r1-distill-llama-70b")
     stability = StabilityAI(os.getenv("STABILITY_KEY"))
     elevenlabs = ElevenLabs(os.getenv("ELEVENLABS_KEY"))
 
