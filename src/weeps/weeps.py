@@ -27,11 +27,12 @@ logger.addHandler(handler)
 from emanations import DiscordBot
 
 from emanations.database import AsyncDb
-from emanations.api.llm import LLMFactory
+from emanations.api.llm import OpenAIServerModel
 from emanations.api.diffusion.stability import StabilityAI
 from emanations.api.tts.elevenlabs import ElevenLabs
+from emanations.api.llm.tools import get_weather
 
-from weeps_utils.config import Emojis
+from weeps_utils.config import Emojis, Prompts
 class Weeps(DiscordBot):
     def __init__(
         self, 
@@ -48,11 +49,13 @@ class Weeps(DiscordBot):
     @property
     def bot_description(self):
         return "Weeps est le Doppelgänger de Meeps. Il est capable de vous aider dans vos tâches quotidiennes, mais il est aussi capable de vous trahir à tout moment."
+    
+
 
     
 async def main():
     db = AsyncDb(os.getenv("DB_URI"))
-    llm = LLMFactory("groq", os.getenv("GROQ_KEY"), default_model="deepseek-r1-distill-llama-70b")
+    llm = OpenAIServerModel(model_id="deepseek-r1-distill-llama-70b", api_base="https://api.groq.com/openai/v1", api_key=os.getenv("GROQ_KEY"))
     stability = StabilityAI(os.getenv("STABILITY_KEY"))
     elevenlabs = ElevenLabs(os.getenv("ELEVENLABS_KEY"))
 

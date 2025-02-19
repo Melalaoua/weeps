@@ -1,4 +1,4 @@
-
+from .prompts import *
 
 class Emojis:
     """Application emojis used by the bot"""
