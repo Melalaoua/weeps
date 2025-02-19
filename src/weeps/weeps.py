@@ -50,7 +50,9 @@ class Weeps(DiscordBot):
     def bot_description(self):
         return "Weeps est le Doppelgänger de Meeps. Il est capable de vous aider dans vos tâches quotidiennes, mais il est aussi capable de vous trahir à tout moment."
     
-
+    @property
+    def prompts(self) -> "Prompts":
+        return Prompts
 
     
 async def main():
