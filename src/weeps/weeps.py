@@ -27,12 +27,12 @@ logger.addHandler(handler)
 from emanations import DiscordBot
 
 from emanations.database import AsyncDb
-from emanations.api.llm import OpenAIServerModel
+from emanations.api.llm import OpenAIServerModel, AngelariumAgent
 from emanations.api.diffusion.stability import StabilityAI
 from emanations.api.tts.elevenlabs import ElevenLabs
-from emanations.api.llm.tools import get_weather
 
 from weeps_utils.config import Emojis, Prompts
+
 class Weeps(DiscordBot):
     def __init__(
         self, 
@@ -50,14 +50,17 @@ class Weeps(DiscordBot):
     def bot_description(self):
         return "Weeps est le Doppelgänger de Meeps. Il est capable de vous aider dans vos tâches quotidiennes, mais il est aussi capable de vous trahir à tout moment."
     
-    @property
-    def prompts(self) -> "Prompts":
-        return Prompts
-
     
 async def main():
     db = AsyncDb(os.getenv("DB_URI"))
-    llm = OpenAIServerModel(model_id="deepseek-r1-distill-llama-70b", api_base="https://api.groq.com/openai/v1", api_key=os.getenv("GROQ_KEY"))
+    llm = OpenAIServerModel(
+        model_id="deepseek-r1-distill-llama-70b", api_base="https://api.groq.com/openai/v1", api_key=os.getenv("GROQ_KEY")
+    )
+    agent = AngelariumAgent(
+        llm=llm,
+        prompts=Prompts
+    )
+
     stability = StabilityAI(os.getenv("STABILITY_KEY"))
     elevenlabs = ElevenLabs(os.getenv("ELEVENLABS_KEY"))
 
@@ -67,6 +70,7 @@ async def main():
         db = db,
         cogs_path="cogs",
         llm = llm,
+        agent=agent,
         stability = stability,
         elevenlabs = elevenlabs,
         
